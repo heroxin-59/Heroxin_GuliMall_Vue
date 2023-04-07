@@ -57,7 +57,7 @@ export default {
       this.PubSub.publish("catPath",v);
     }
   },
-  //方法集合
+  //方法集合列表
   methods: {
     getCategorys() {
       this.$http({

@@ -295,9 +295,6 @@ export default {
       this.catelogPath = [];
     }
   },
-
-
-  
   created(){
     this.getCategorys();
   }
