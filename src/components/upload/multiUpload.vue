@@ -1,17 +1,8 @@
 <template>
   <div>
-    <el-upload
-      action="http://heroxin.oss-cn-beijing.aliyuncs.com"
-      :data="dataObj"
-      list-type="picture-card"
-      :file-list="fileList"
-      :before-upload="beforeUpload"
-      :on-remove="handleRemove"
-      :on-success="handleUploadSuccess"
-      :on-preview="handlePreview"
-      :limit="maxCount"
-      :on-exceed="handleExceed"
-    >
+    <el-upload action="http://heroxin.oss-cn-beijing.aliyuncs.com" :data="dataObj" list-type="picture-card"
+      :file-list="fileList" :before-upload="beforeUpload" :on-remove="handleRemove" :on-success="handleUploadSuccess"
+      :on-preview="handlePreview" :limit="maxCount" :on-exceed="handleExceed">
       <i class="el-icon-plus"></i>
     </el-upload>
     <el-dialog :visible.sync="dialogVisible">
@@ -42,7 +33,8 @@ export default {
         ossaccessKeyId: "",
         dir: "",
         host: "",
-        uuid: ""
+        uuid: "",
+        stsToken: ""
       },
       dialogVisible: false,
       dialogImageUrl: null
@@ -58,7 +50,7 @@ export default {
       return fileList;
     }
   },
-  mounted() {},
+  mounted() { },
   methods: {
     emitInput(fileList) {
       let value = [];
@@ -79,17 +71,20 @@ export default {
       return new Promise((resolve, reject) => {
         policy()
           .then(response => {
-            console.log("这是什么${filename}");
+            console.log("响应的数据：", response);
             _self.dataObj.policy = response.data.policy;
             _self.dataObj.signature = response.data.signature;
-            _self.dataObj.ossaccessKeyId = response.data.accessid;
-            _self.dataObj.key = response.data.dir + "/"+getUUID()+"_${filename}";
+            _self.dataObj.ossaccessKeyId = response.data.accessId;
+            _self.dataObj.key = response.data.dir + "/" + getUUID() + "_${filename}";
             _self.dataObj.dir = response.data.dir;
             _self.dataObj.host = response.data.host;
+            console.log("响应的数据22", _self.dataObj);
+
+            // _self.dataObj.stsToken = response.data.securityToken
             resolve(true);
           })
           .catch(err => {
-            console.log("出错了...",err)
+            console.log("出错了...", err)
             reject(false);
           });
       });
@@ -98,7 +93,7 @@ export default {
       this.fileList.push({
         name: file.name,
         // url: this.dataObj.host + "/" + this.dataObj.dir + "/" + file.name； 替换${filename}为真正的文件名
-        url: this.dataObj.host + "/" + this.dataObj.key.replace("${filename}",file.name)
+        url: this.dataObj.host + "/" + this.dataObj.key.replace("${filename}", file.name)
       });
       this.emitInput(this.fileList);
     },
@@ -112,7 +107,6 @@ export default {
   }
 };
 </script>
-<style>
-</style>
+<style></style>
 
 

@@ -11,9 +11,11 @@ import httpRequest from '@/utils/httpRequest' // api: https://github.com/axios/a
 import { isAuth } from '@/utils'
 import cloneDeep from 'lodash/cloneDeep'
 import 'element-ui/lib/theme-chalk/index.css'
+import PubSub from 'pubsub-js'
 
 Vue.use(VueCookie)
 Vue.config.productionTip = false
+Vue.prototype.PubSub = PubSub
 
 // 非生产环境, 适配mockjs模拟数据                 // api: https://github.com/nuysoft/Mock
 if (process.env.NODE_ENV !== 'production') {

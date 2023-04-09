@@ -49,6 +49,7 @@
               </el-input-number>
             </el-form-item>
             <el-form-item label="商品介绍" prop="decript">
+              <!-- <MultiUpload v-model="spu.decript"></MultiUpload> -->
               <multi-upload v-model="spu.decript"></multi-upload>
             </el-form-item>
 
